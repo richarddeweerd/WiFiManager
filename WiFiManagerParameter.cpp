@@ -66,6 +66,10 @@ WiFiManagerParameter::WiFiManagerParameter() {
     WiFiManagerParameter("");
 }
 
+void WiFiManagerParameterBase::item_to_json(JsonDocument &doc) {
+    doc[_id] = getValue();
+}
+
 WiFiManagerParameter::WiFiManagerParameter(const char *custom) : WiFiManagerParameterBase() {
     _labelPlacement = WFM_LABEL_BEFORE;
     _customHTML = custom;

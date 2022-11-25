@@ -1,6 +1,7 @@
 #ifndef WiFiManagerParameter_h
 #define WiFiManagerParameter_h
 #include <Arduino.h>
+#include <ArduinoJson.h>
 #include <WiFi.h>
 
 #include "strings_en.h"
@@ -27,6 +28,7 @@ class WiFiManagerParameterBase {
     void setValue(const char *defaultValue, int length);
     char *_value;
     int _length;
+    void item_to_json(JsonDocument &doc);
 
    private:
     const char *_id;

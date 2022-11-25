@@ -50,6 +50,7 @@ const char* const HTTP_PORTAL_MENU[] PROGMEM = {
     "<form action='/exit'    method='get'><button>Exit</button></form><br/>\n",                      // MENU_EXIT
     "<form action='/erase'   method='get'><button class='D'>Erase</button></form><br/>\n",           // MENU_ERASE
     "<form action='/update'  method='get'><button>Update</button></form><br/>\n",                    // MENU_UPDATE
+    "<form action='/webupd'  method='get'><button>Web Update</button></form><br/>\n",                // MENU_UPDATE
     "<hr><br/>"                                                                                      // MENU_SEP
 };
 
@@ -264,7 +265,7 @@ const char D_HR[] PROGMEM = "--------------------";
 // -----------------------------------------------------------------------------------------------
 // DO NOT EDIT BELOW THIS LINE
 
-const uint8_t _nummenutokens = 11;
+const uint8_t _nummenutokens = 12;
 const char* const _menutokens[_nummenutokens] PROGMEM = {
     "wifi",
     "wifinoscan",
@@ -275,6 +276,7 @@ const char* const _menutokens[_nummenutokens] PROGMEM = {
     "exit",
     "erase",
     "update",
+    "webupd",
     "sep",
     "custom"};
 
@@ -291,6 +293,7 @@ const char R_close[] PROGMEM = "/close";
 const char R_erase[] PROGMEM = "/erase";
 const char R_status[] PROGMEM = "/status";
 const char R_update[] PROGMEM = "/update";
+const char R_webupd[] PROGMEM = "/webupd";
 const char R_updatedone[] PROGMEM = "/u";
 
 // Strings

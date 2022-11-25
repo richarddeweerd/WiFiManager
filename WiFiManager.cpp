@@ -18,8 +18,6 @@
 uint8_t WiFiManager::_lastconxresulttmp = WL_IDLE_STATUS;
 #endif
 
-
-
 /**
  * [addParameter description]
  * @access public
@@ -546,6 +544,8 @@ void WiFiManager::setupHTTPServer() {
     server->onNotFound(std::bind(&WiFiManager::handleNotFound, this));
 
     server->on(WM_G(R_update), std::bind(&WiFiManager::handleUpdate, this));
+    server->on(WM_G(R_webupd), std::bind(&WiFiManager::handleWebUpdate, this));
+
     server->on(WM_G(R_updatedone), HTTP_POST, std::bind(&WiFiManager::handleUpdateDone, this), std::bind(&WiFiManager::handleUpdating, this));
 
     server->begin();  // Web server start
@@ -1578,32 +1578,27 @@ String WiFiManager::getStaticOut() {
 
     return page;
 }
-String WiFiManager::getParamOut()
-{
-  String page;
+String WiFiManager::getParamOut() {
+    String page;
 
-  if (_paramsCount > 0)
-  {
-    // add the extra parameters to the form
-    for (int i = 0; i < _paramsCount; i++)
-    {
-      if (_params[i] == NULL || _params[i]->getValueLength() == 0)
-      {
+    if (_paramsCount > 0) {
+        // add the extra parameters to the form
+        for (int i = 0; i < _paramsCount; i++) {
+            if (_params[i] == NULL || _params[i]->getValueLength() == 0) {
 #ifdef WM_DEBUG_LEVEL
-        DEBUG_WM(DEBUG_ERROR, F("[ERROR] WiFiManagerParameter is out of scope"));
+                DEBUG_WM(DEBUG_ERROR, F("[ERROR] WiFiManagerParameter is out of scope"));
 #endif
-        break;
-      }
+                break;
+            }
 
-      // label before or after, @todo this could be done via floats or CSS and eliminated
+            // label before or after, @todo this could be done via floats or CSS and eliminated
 
-      page += _params[i]->getHTML();
+            page += _params[i]->getHTML();
+        }
     }
-  }
 
-  return page;
+    return page;
 }
-
 
 void WiFiManager::handleWiFiStatus() {
 #ifdef WM_DEBUG_LEVEL
@@ -3653,6 +3648,24 @@ void WiFiManager::handleUpdate() {
     HTTPSend(page);
 }
 
+void WiFiManager::handleWebUpdate() {
+#ifdef WM_DEBUG_LEVEL
+    DEBUG_WM(DEBUG_VERBOSE, F("<- Handle update"));
+#endif
+    if (captivePortal()) return;        // If captive portal redirect instead of displaying the page
+    String page = getHTTPHead(_title);  // @token options
+    String str = FPSTR(HTTP_ROOT_MAIN);
+    str.replace(FPSTR(T_t), _title);
+    str.replace(FPSTR(T_v), configPortalActive ? _apName : (getWiFiHostname() + " - " + WiFi.localIP().toString()));  // use ip if ap is not active for heading
+    page += str;
+
+    page += FPSTR(HTTP_UPDATE);
+    page += FPSTR(HTTP_END);
+
+    HTTPSend(page);
+}
+
+
 // upload via /u POST
 void WiFiManager::handleUpdating() {
     // @todo
@@ -3778,3 +3791,21 @@ void WiFiManager::handleUpdateDone() {
 }
 
 #endif
+
+void WiFiManager::save() {
+    DynamicJsonDocument doc(2048);
+    if (_paramsCount > 0) {
+        // add the extra parameters to the form
+        for (int i = 0; i < _paramsCount; i++) {
+            if (_params[i] == NULL || _params[i]->getValueLength() == 0) {
+#ifdef WM_DEBUG_LEVEL
+                DEBUG_WM(DEBUG_ERROR, F("[ERROR] WiFiManagerParameter is out of scope"));
+#endif
+                break;
+            }
+            _params[i]->item_to_json(doc);
+            // label before or after, @todo this could be done via floats or CSS and eliminated
+        }
+    }
+    serializeJson(doc, Serial);
+}

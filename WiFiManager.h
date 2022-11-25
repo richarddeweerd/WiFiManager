@@ -19,6 +19,8 @@
 #include <core_version.h>
 #endif
 
+#include <ArduinoJson.h>
+
 #include <vector>
 
 // #define WM_MDNS            // includes MDNS, also set MDNS with sethostname
@@ -436,6 +438,8 @@ class WiFiManager {
 
     std::unique_ptr<DNSServer> dnsServer;
 
+    void save();
+
 #if defined(ESP32) && defined(WM_WEBSERVERSHIM)
     using WM_WebServer = WebServer;
 #else
@@ -615,6 +619,7 @@ class WiFiManager {
     void stopCaptivePortal();
     // OTA Update handler
     void handleUpdate();
+    void handleWebUpdate();
     void handleUpdating();
     void handleUpdateDone();
 
