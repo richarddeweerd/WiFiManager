@@ -438,7 +438,8 @@ class WiFiManager {
 
     std::unique_ptr<DNSServer> dnsServer;
 
-    void save();
+    void save(JsonDocument &doc);
+    void load(JsonDocument &doc);
 
 #if defined(ESP32) && defined(WM_WEBSERVERSHIM)
     using WM_WebServer = WebServer;

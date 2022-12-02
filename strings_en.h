@@ -66,9 +66,8 @@ const char HTTP_FORM_WIFI[] PROGMEM = "<label for='s'>SSID</label><input id='s' 
 const char HTTP_FORM_WIFI_END[] PROGMEM = "";
 const char HTTP_FORM_STATIC_HEAD[] PROGMEM = "<hr><br/>";
 const char HTTP_FORM_END[] PROGMEM = "<br/><br/><button type='submit'>Save</button></form>";
-const char HTTP_FORM_LABEL[] PROGMEM = "<label for='{i}'>{t}</label>";
+
 const char HTTP_FORM_PARAM_HEAD[] PROGMEM = "<hr><br/>";
-const char HTTP_FORM_PARAM[] PROGMEM = "<br/><input id='{i}' name='{n}' maxlength='{l}' value='{v}' {c}>\n";  // do not remove newline!
 
 const char HTTP_SCAN_LINK[] PROGMEM = "<br/><form action='/wifi?refresh=1' method='POST'><button name='refresh' value='1'>Refresh</button></form>";
 const char HTTP_SAVED[] PROGMEM = "<div class='msg'>Saving Credentials<br/>Trying to connect ESP to network.<br />If it fails reconnect to AP to try again</div>";
@@ -318,14 +317,9 @@ const char T_es[] PROGMEM = "}";   // token end sentinel
 const char T_1[] PROGMEM = "{1}";  // @token 1
 const char T_2[] PROGMEM = "{2}";  // @token 2
 const char T_3[] PROGMEM = "{3}";  // @token 2
-const char T_v[] PROGMEM = "{v}";  // @token v
 const char T_V[] PROGMEM = "{V}";  // @token v
 const char T_I[] PROGMEM = "{I}";  // @token I
-const char T_i[] PROGMEM = "{i}";  // @token i
-const char T_n[] PROGMEM = "{n}";  // @token n
 const char T_p[] PROGMEM = "{p}";  // @token p
-const char T_t[] PROGMEM = "{t}";  // @token t
-const char T_l[] PROGMEM = "{l}";  // @token l
 const char T_c[] PROGMEM = "{c}";  // @token c
 const char T_e[] PROGMEM = "{e}";  // @token e
 const char T_q[] PROGMEM = "{q}";  // @token q
