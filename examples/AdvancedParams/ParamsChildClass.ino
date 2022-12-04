@@ -9,13 +9,13 @@
 WiFiManager wm;
 WiFiManagerParameterString custom_mqtt_server;
 WiFiManagerParameterInt custom_mqtt_port;
-WiFiManagerParameterString custom_mqtt_user;
-WiFiManagerParameterPassword custom_mqtt_password;
+WiFiManagerParameterString parameter_mqtt_user;
+WiFiManagerParameterPassword parameter_mqtt_password;
 WiFiManagerParameterBoolean custom_mqtt_boolean;
 WiFiManagerParameterBoolean custom_mqtt_boolean2;
 WiFiManagerParameterSpacer spacer("Label");
 WiFiManagerParameterSelect custom_selector;
-WiFiManagerParameterSelectOption base_option1(1, "Label1");
+WiFiManagerParameterSelectOption light_mode_off(1, "Label1");
 WiFiManagerParameterSelectOption base_option2(2, "Label2");
 
 void cb() {
@@ -52,9 +52,9 @@ void setup() {
     // wm_init(&wm);
     wm.addParameter(&custom_mqtt_server);
     wm.addParameter(&custom_mqtt_port);
-    wm.addParameter(&custom_mqtt_user);
+    wm.addParameter(&parameter_mqtt_user);
     wm.addParameter(&spacer);
-    wm.addParameter(&custom_mqtt_password);
+    wm.addParameter(&parameter_mqtt_password);
     wm.addParameter(&custom_mqtt_boolean);
     wm.addParameter(&custom_mqtt_boolean2);
     wm.addParameter(&custom_selector);

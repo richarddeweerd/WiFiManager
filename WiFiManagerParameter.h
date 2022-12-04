@@ -84,10 +84,13 @@ class WiFiManagerParameterInt : public WiFiManagerParameter {
    public:
     WiFiManagerParameterInt() : WiFiManagerParameter() { setValue(0); };
     ~WiFiManagerParameterInt(){};
-    void init(const char *id, const char *label, int max_length, LabelPlace label_place, int default_value);
+    void init(const char *id, const char *label, int max_length, LabelPlace label_place, int default_value, int min_value, int max_value);
     void setValue(int new_value) { _value = new_value; };
     int getValue() { return _value; };
-
+    void setMinValue(int new_value) { _min_value = new_value; };
+    int getMinValue() { return _min_value; };
+    void setMaxValue(int new_value) { _max_value = new_value; };
+    int getMaxValue() { return _max_value; };
     // Virtual Overrides
     const char *getStringValue();
     void setNewValue(const char *new_val);
@@ -95,6 +98,8 @@ class WiFiManagerParameterInt : public WiFiManagerParameter {
 
    private:
     int _value;
+    int _min_value;
+    int _max_value;
 };
 
 class WiFiManagerParameterBoolean : public WiFiManagerParameter {
@@ -139,7 +144,7 @@ class WiFiManagerParameterSelectOption {
 class WiFiManagerParameterSelect : public WiFiManagerParameterInt {
    public:
     WiFiManagerParameterSelect();
-    void init(const char *id, const char *label, LabelPlace label_place, int default_value);
+    void init(const char *id, const char *label, LabelPlace label_place, int default_value, int min_value, int max_value);
 
     void addOption(WiFiManagerParameterSelectOption *p);
 

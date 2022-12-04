@@ -16,7 +16,7 @@ const char HTTP_FORM_PARAM_SELECTED[] PROGMEM = " selected";
 const char HTTP_FORM_PARAM_SPACER[] PROGMEM = "<hr>";
 const char HTTP_FORM_PARAM_STRING[] PROGMEM = "<input id='{i}' name='{n}' maxlength='{l}' value='{v}'>";  // do not remove newline!
 const char HTTP_FORM_PARAM_INT[] PROGMEM =
-    "<input type='number' id='{i}' name='{n}' maxlength='{l}' value='{v}' min='1' max='20000'>";  // do not remove newline!
+    "<input type='number' id='{i}' name='{n}' maxlength='{l}' value='{v}' min='{m}' max='{M}'>";  // do not remove newline!
 const char HTTP_FORM_LABEL[] PROGMEM = "<label for='{i}'>{t}</label>";
 const char HTTP_FORM_ENDLINE[] PROGMEM = "<br/>";
 
@@ -31,4 +31,7 @@ const char T_i[] PROGMEM = "{i}";    // @token i
 const char T_n[] PROGMEM = "{n}";    // @token n
 const char T_v[] PROGMEM = "{v}";    // @token v
 const char T_l[] PROGMEM = "{l}";    // @token l
+const char T_m[] PROGMEM = "{m}";    // @token m
+const char T_M[] PROGMEM = "{M}";    // @token M
+
 #endif

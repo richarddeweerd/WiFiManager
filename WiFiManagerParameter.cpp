@@ -121,8 +121,11 @@ void WiFiManagerParameterPassword::setNewValue(const char *new_val) {
  * --------------------------------------------------------------------------------
  **/
 
-void WiFiManagerParameterInt::init(const char *id, const char *label, int max_length, LabelPlace label_place, int default_value) {
+void WiFiManagerParameterInt::init(const char *id, const char *label, int max_length, LabelPlace label_place, int default_value, int min_value,
+                                   int max_value) {
     WiFiManagerParameter::init(id, label, max_length, label_place);
+    setMinValue(min_value);
+    setMaxValue(max_value);
     setValue(default_value);
 }
 
@@ -211,8 +214,8 @@ WiFiManagerParameterSelect::WiFiManagerParameterSelect() : WiFiManagerParameterI
     setValue(0);
 }
 
-void WiFiManagerParameterSelect::init(const char *id, const char *label, LabelPlace label_place, int default_value) {
-    WiFiManagerParameterInt::init(id, label, 10, label_place, default_value);
+void WiFiManagerParameterSelect::init(const char *id, const char *label, LabelPlace label_place, int default_value, int min_value, int max_value) {
+    WiFiManagerParameterInt::init(id, label, 10, label_place, default_value, min_value, max_value);
 }
 
 void WiFiManagerParameterSelect::addOption(WiFiManagerParameterSelectOption *p) {
