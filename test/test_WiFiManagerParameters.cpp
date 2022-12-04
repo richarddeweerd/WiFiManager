@@ -287,7 +287,7 @@ TEST(WiFiManagerParameterInt, Base) {
 
 TEST(WiFiManagerParameterInt, init) {
     WiFiManagerParameterInt base_param;
-    base_param.init("base_id", "base_label", 40, LabelPlace::LABEL_BEFORE, 1234);
+    base_param.init("base_id", "base_label", 40, LabelPlace::LABEL_BEFORE, 1234, 0, 20000);
     ASSERT_STREQ(base_param.getID(), "base_id");
     ASSERT_STREQ(base_param.getLabel(), "base_label");
     ASSERT_EQ(base_param.getLabelPlace(), LabelPlace::LABEL_BEFORE);
@@ -319,32 +319,32 @@ TEST(WiFiManagerParameterInt, setNewValue) {
 TEST(WiFiManagerParameterInt, getHTMLTemplate) {
     WiFiManagerParameterInt base_param;
     // base_param.init("mqtt_server", "MQTT server", "DEFAULT_MQTT_HOST", 40, LabelPlace::LABEL_BEFORE);
-    ASSERT_STREQ(base_param.getHTMLTemplate().c_str(), "<input type='number' id='{i}' name='{n}' maxlength='{l}' value='{v}' min='1' max='20000'>");
+    ASSERT_STREQ(base_param.getHTMLTemplate().c_str(), "<input type='number' id='{i}' name='{n}' maxlength='{l}' value='{v}' min='{m}' max='{M}'>");
 }
 
 TEST(WiFiManagerParameterInt, getHTML_label_before) {
     WiFiManagerParameterInt base_param;
-    base_param.init("id", "Label", 40, LabelPlace::LABEL_BEFORE, 1234);
+    base_param.init("id", "Label", 40, LabelPlace::LABEL_BEFORE, 1234, 1, 20000);
     ASSERT_STREQ(base_param.getHTML().c_str(),
                  "<label for='id'>Label</label><br/><input type='number' id='id' name='id' maxlength='40' value='1234' min='1' max='20000'><br/>");
 }
 
 TEST(WiFiManagerParameterInt, getHTML_label_after) {
     WiFiManagerParameterInt base_param;
-    base_param.init("id", "Label", 40, LabelPlace::LABEL_AFTER, 1234);
+    base_param.init("id", "Label", 40, LabelPlace::LABEL_AFTER, 1234, 1, 20000);
     ASSERT_STREQ(base_param.getHTML().c_str(),
                  "<input type='number' id='id' name='id' maxlength='40' value='1234' min='1' max='20000'><br/><label for='id'>Label</label><br/>");
 }
 
 TEST(WiFiManagerParameterInt, getHTML_no_label) {
     WiFiManagerParameterInt base_param;
-    base_param.init("id", "Label", 40, LabelPlace::NO_LABEL, 1234);
+    base_param.init("id", "Label", 40, LabelPlace::NO_LABEL, 1234, 1, 20000);
     ASSERT_STREQ(base_param.getHTML().c_str(), "<input type='number' id='id' name='id' maxlength='40' value='1234' min='1' max='20000'><br/>");
 }
 
 TEST(WiFiManagerParameterInt, from_JSON) {
     WiFiManagerParameterInt base_param;
-    base_param.init("id", "Label", 40, LabelPlace::NO_LABEL, 1234);
+    base_param.init("id", "Label", 40, LabelPlace::NO_LABEL, 1234, 0, 20000);
     ASSERT_EQ(base_param.getValue(), 1234);
     DynamicJsonDocument doc(512);
     doc["id"] = "4321";
@@ -356,7 +356,7 @@ TEST(WiFiManagerParameterInt, to_JSON) {
     String json;
     DynamicJsonDocument doc(512);
     WiFiManagerParameterInt base_param;
-    base_param.init("id", "Label", 40, LabelPlace::NO_LABEL, 1234);
+    base_param.init("id", "Label", 40, LabelPlace::NO_LABEL, 1234, 0, 20000);
     base_param.item_to_json(doc);
     serializeJson(doc, json);
     ASSERT_STREQ(json.c_str(), "{\"id\":\"1234\"}");
@@ -492,7 +492,7 @@ TEST(WiFiManagerParameterSelect, Base) {
 
 TEST(WiFiManagerParameterSelect, init) {
     WiFiManagerParameterSelect base_select;
-    base_select.init("id", "Lab", LabelPlace::LABEL_BEFORE, 1);
+    base_select.init("id", "Lab", LabelPlace::LABEL_BEFORE, 1, 0, 10);
     ASSERT_EQ(base_select._paramsCount, 0);
     ASSERT_STREQ(base_select.getID(), "id");
     ASSERT_EQ(base_select.getValue(), 1);
@@ -501,7 +501,7 @@ TEST(WiFiManagerParameterSelect, init) {
 
 TEST(WiFiManagerParameterSelect, AddOption) {
     WiFiManagerParameterSelect base_select;
-    base_select.init("id", "Lab", LabelPlace::LABEL_BEFORE, 1);
+    base_select.init("id", "Lab", LabelPlace::LABEL_BEFORE, 1, 0, 10);
     WiFiManagerParameterSelectOption base_option1(1, "Label1");
     base_select.addOption(&base_option1);
     ASSERT_EQ(base_select._paramsCount, 1);
@@ -511,7 +511,7 @@ TEST(WiFiManagerParameterSelect, AddOption) {
 
 TEST(WiFiManagerParameterSelect, AddOption_twice) {
     WiFiManagerParameterSelect base_select;
-    base_select.init("id", "Lab", LabelPlace::LABEL_BEFORE, 1);
+    base_select.init("id", "Lab", LabelPlace::LABEL_BEFORE, 1, 0, 10);
     WiFiManagerParameterSelectOption base_option1(2, "Label1");
     WiFiManagerParameterSelectOption base_option2(3, "Label2");
     base_select.addOption(&base_option1);
@@ -528,7 +528,7 @@ TEST(WiFiManagerParameterSelect, AddOption_twice) {
 
 TEST(WiFiManagerParameterSelect, getHTMLTemplate) {
     WiFiManagerParameterSelect base_select;
-    base_select.init("id", "Lab", LabelPlace::LABEL_BEFORE, 1);
+    base_select.init("id", "Lab", LabelPlace::LABEL_BEFORE, 1, 0, 20);
     ASSERT_STREQ(base_select.getHTMLTemplate().c_str(), "<select id='{i}' name='{n}'>{o}</select>");
 }
 
@@ -539,7 +539,7 @@ TEST(WiFiManagerParameterSelect, getHTML) {
 
 TEST(WiFiManagerParameterSelect, AddOption_get_html) {
     WiFiManagerParameterSelect base_select;
-    base_select.init("id", "Lab", LabelPlace::LABEL_BEFORE, 1);
+    base_select.init("id", "Lab", LabelPlace::LABEL_BEFORE, 1, 0, 10);
 
     WiFiManagerParameterSelectOption base_option1(1, "Label1");
     base_select.addOption(&base_option1);
@@ -549,7 +549,7 @@ TEST(WiFiManagerParameterSelect, AddOption_get_html) {
 
 TEST(WiFiManagerParameterSelect, AddOption_twice_get_html) {
     WiFiManagerParameterSelect base_select;
-    base_select.init("id", "Lab", LabelPlace::LABEL_BEFORE, 1);
+    base_select.init("id", "Lab", LabelPlace::LABEL_BEFORE, 1, 0, 10);
 
     WiFiManagerParameterSelectOption base_option1(1, "Label1");
     WiFiManagerParameterSelectOption base_option2(2, "Label2");

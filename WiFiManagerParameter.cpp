@@ -137,6 +137,16 @@ const char *WiFiManagerParameterInt::getStringValue() {
 };
 void WiFiManagerParameterInt::setNewValue(const char *new_val) { _value = atoi(new_val); }
 
+String WiFiManagerParameterInt::getHTML() {
+    char valLength[5];
+
+    String param_item_html = WiFiManagerParameter::getHTML();
+    param_item_html.replace(FPSTR(T_m), String(getMinValue()));
+    param_item_html.replace(FPSTR(T_M), String(getMaxValue()));
+
+    return param_item_html;
+}
+
 /**
  * --------------------------------------------------------------------------------
  *  WiFiManagerParameterBoolean

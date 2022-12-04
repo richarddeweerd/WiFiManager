@@ -95,6 +95,7 @@ class WiFiManagerParameterInt : public WiFiManagerParameter {
     const char *getStringValue();
     void setNewValue(const char *new_val);
     String getHTMLTemplate() { return FPSTR(HTTP_FORM_PARAM_INT); };
+    String getHTML();
 
    private:
     int _value;
